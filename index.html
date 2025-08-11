@@ -1,3 +1,39 @@
+<div style="text-align:right;margin:10px">
+  <button onclick="setLang('en')">English</button>
+  <button onclick="setLang('tr')">Türkçe</button>
+</div>
+
+<h1 id="welcome"></h1>
+<p id="description"></p>
+
+<script>
+const texts = {
+  en: {
+    welcome: "Welcome to Zero – Eco Lifestyle Coach",
+    description: "Track your carbon footprint and get personalized eco-friendly tips."
+  },
+  tr: {
+    welcome: "Zero – Eko Yaşam Koçuna Hoş Geldiniz",
+    description: "Karbon ayak izinizi takip edin ve kişiselleştirilmiş çevre dostu ipuçları alın."
+  }
+};
+
+function setLang(lang) {
+  localStorage.setItem('lang', lang);
+  applyLang(lang);
+}
+
+function applyLang(lang) {
+  document.getElementById('welcome').textContent = texts[lang].welcome;
+  document.getElementById('description').textContent = texts[lang].description;
+}
+
+// İlk yüklemede tarayıcı dili
+let userLang = localStorage.getItem('lang') || navigator.language.slice(0,2);
+if (!texts[userLang]) userLang = 'en';
+applyLang(userLang);
+</script>
+
 <!doctype html>
 <html lang="en">
 <head>
