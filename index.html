@@ -1,74 +1,291 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Zero – Eco Lifestyle Coach</title>
-<style>
-body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #0b1e18; color: #fff; }
-header { font-size: 24px; font-weight: bold; margin-bottom: 20px; }
-.card { background: #123126; border-radius: 10px; padding: 15px; margin-bottom: 20px; }
-button { background: #7be495; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title data-translate>Zero – Eco Lifestyle Coach</title>
+  <meta name="description" content="Zero helps you track your carbon footprint, get personalized eco tips, and monitor progress — in any language, anywhere.">
+  <style>
+    :root{ --bg:#0b1e18; --card:#123126; --muted:#b6d5ca; --accent:#7be495; --text:#ffffff; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text)}
+    .wrap{max-width:1000px;margin:0 auto;padding:20px}
+    header{display:flex;gap:12px;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#2fbf71,#0ea371)}
+    .lang{display:flex;gap:8px}
+    button, a.btn{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;background:var(--accent);color:#0b1e18;font-weight:600;text-decoration:none}
+    button.ghost{background:transparent;color:var(--muted);border:1px solid #26453b}
+    .card{background:color-mix(in srgb, var(--card) 90%, transparent);border:1px solid #1f3c31;border-radius:16px;padding:20px;margin-top:16px}
+    h1{margin:14px 0 6px}
+    p.lead{margin:0;color:var(--muted)}
+    .grid{display:grid;gap:14px}
+    @media(min-width:1050px){ .grid{grid-template-columns:1.1fr .9fr} }
+    .muted{color:var(--muted)}
+    footer{margin:30px 0 10px;color:var(--muted);font-size:14px;display:flex;gap:12px;flex-wrap:wrap}
+    .chips{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{border:1px solid #2b5144;color:var(--muted);padding:6px 10px;border-radius:999px;font-size:13px}
+    .badge{display:inline-block;background:#0f342a;border:1px solid #2a5c4b;border-radius:8px;padding:6px 10px;font-size:13px;color:var(--muted)}
+    .tip{border-left:3px solid var(--accent);padding-left:10px}
+    .links{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .kpi{display:flex;gap:14px;flex-wrap:wrap}
+    .kpi .box{flex:1 1 180px;border:1px solid #1f3c31;background:#0d261f;border-radius:12px;padding:12px}
+    .center{display:flex;align-items:center;gap:10px}
+    .sponsors{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+    .sp{border:1px solid #1f3c31;background:#0d261f;border-radius:12px;padding:12px;display:flex;gap:10px;align-items:center}
+    .sp img{width:46px;height:46px;object-fit:contain;background:#062018;border-radius:10px;border:1px solid #15392e}
+    .err{background:#3a1414;border:1px solid #6a2a2a;color:#f5d0d0;padding:10px;border-radius:8px}
+  </style>
 </head>
 <body>
-<header data-translate>Welcome to Zero – Eco Lifestyle Coach</header>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <div style="font-weight:700" data-translate>Zero – Eco Lifestyle Coach</div>
+          <div class="muted" id="subtitle" data-translate>Track Your Eco Impact</div>
+        </div>
+      </div>
+      <div class="lang">
+        <button class="ghost" onclick="forceLang('en')">English</button>
+        <button class="ghost" onclick="forceLang('auto')" data-translate>Auto</button>
+      </div>
+    </header>
 
-<div class="card">
-  <p data-translate>Calculate your carbon footprint and get personalized eco tips for a sustainable lifestyle.</p>
-</div>
+    <div class="grid">
+      <section class="card">
+        <h1 id="welcome" data-translate>Welcome to Zero – Eco Lifestyle Coach</h1>
+        <p class="lead" id="desc" data-translate>Calculate your carbon footprint, get personalized eco tips, and track your progress — in any language, anywhere.</p>
 
-<div class="card">
-  <h3 data-translate>Quick Eco Tips</h3>
-  <ul>
-    <li data-translate>Walk or cycle for short trips.</li>
-    <li data-translate>Use LED bulbs at home.</li>
-    <li data-translate>Wash clothes in cold water.</li>
-  </ul>
-</div>
+        <div class="kpi" style="margin-top:12px">
+          <div class="box">
+            <div class="muted" id="kpi1t" data-translate>Current Impact</div>
+            <div style="font-size:22px;font-weight:700">—</div>
+            <div class="muted" id="kpi1d" data-translate>Starter mode (no payments)</div>
+          </div>
+          <div class="box">
+            <div class="muted" id="kpi2t" data-translate>This Month</div>
+            <div style="font-size:22px;font-weight:700">—</div>
+            <div class="muted" id="kpi2d" data-translate>Track tips completed</div>
+          </div>
+          <div class="box">
+            <div class="muted" id="kpi3t" data-translate>Badges</div>
+            <div class="chips"><span class="chip" data-translate>Starter</span><span class="chip" data-translate>Ad-Free Tips</span></div>
+          </div>
+        </div>
 
-<div class="card">
-  <h3 data-translate>Monthly Progress</h3>
-  <p data-translate>Save tips as you complete them; your monthly progress will appear here.</p>
-</div>
+        <div class="links">
+          <a class="btn" href="/health.html" id="healthBtn" data-translate>Health Check</a>
+          <a class="btn" href="#tips" id="tipsBtn" data-translate>Eco Tips</a>
+          <a class="btn" href="#reports" id="reportsBtn" data-translate>Monthly Report</a>
+        </div>
+      </section>
 
-<script>
-const GOOGLE_API_KEY = "AIzaSyBmV41DxgaElPcfAH-Bstv9ZI0Qn1reVaQ";
+      <aside class="card" id="tips">
+        <div class="center" style="justify-content:space-between">
+          <h3 id="tipsTitle" style="margin:0" data-translate>Quick Eco Tips</h3>
+          <span class="badge" id="savedBadge" data-translate>Saved: 0</span>
+        </div>
+        <div id="tipsList" style="margin-top:10px;display:grid;gap:10px"></div>
+        <div id="tipsErr" style="margin-top:10px;display:none" class="err" data-translate>Could not load tips.csv.</div>
+      </aside>
+    </div>
 
-// Kullanıcı dilini al
-window.onload = () => {
-  const userLang = navigator.language.split('-')[0];
-  if(userLang !== 'en') {
-    translatePage(userLang);
-  }
-};
+    <section class="card">
+      <div class="center" style="justify-content:space-between">
+        <h3 style="margin:0" id="spTitle" data-translate>Sponsors</h3>
+        <a class="ghost" href="/admin.html" data-translate>Admin</a>
+      </div>
+      <div id="spGrid" class="sponsors" style="margin-top:10px"></div>
+      <div id="spErr" style="margin-top:10px;display:none" class="err" data-translate>Could not load sponsors.csv.</div>
+    </section>
 
-// Sayfayı çevir
-function translatePage(targetLang) {
-  const elements = document.querySelectorAll("[data-translate]");
-  elements.forEach(el => {
-    const text = el.innerText.trim();
-    if(text) {
-      fetch(`https://translation.googleapis.com/language/translate/v2?key=${GOOGLE_API_KEY}`, {
-        method: "POST",
-        body: JSON.stringify({
-          q: text,
-          source: "en",
-          target: targetLang,
-          format: "text"
-        }),
-        headers: { "Content-Type": "application/json" }
-      })
-      .then(res => res.json())
-      .then(data => {
-        if(data?.data?.translations[0]?.translatedText) {
-          el.innerText = data.data.translations[0].translatedText;
-        }
-      })
-      .catch(err => console.error("Translation error:", err));
+    <section class="card" id="reports" style="margin-top:16px">
+      <h3 id="reportTitle" style="margin:0 0 6px" data-translate>Monthly Progress</h3>
+      <p class="muted" id="reportDesc" data-translate>Save tips as you complete them; your monthly progress will appear here.</p>
+      <div class="chips" id="monthChips">
+        <span class="chip" data-translate>Tips completed: <b id="doneCount">0</b></span>
+        <span class="chip" data-translate>Languages: Auto</span>
+        <span class="chip" data-translate>Payments: Disabled</span>
+      </div>
+    </section>
+
+    <footer>
+      <a class="ghost" href="/privacy.html" data-translate>Privacy</a>
+      <a class="ghost" href="/terms.html" data-translate>Terms</a>
+      <span>© <span id="year"></span> <span data-translate>Zero</span></span>
+    </footer>
+  </div>
+
+  <script>
+    // ---------- Google Translate API (client-side) ----------
+    const GOOGLE_API_KEY = "AIzaSyBmV41DxgaElPcfAH-Bstv9ZI0Qn1reVaQ";
+
+    // Kullanıcı dilini belirle (localStorage 'auto' ise navigator.lang)
+    function getTargetLang() {
+      const forced = localStorage.getItem('zero_lang');
+      if (!forced || forced === 'auto') {
+        return (navigator.language || 'en').split('-')[0];
+      }
+      return forced;
     }
-  });
-}
-</script>
+    function forceLang(code){
+      localStorage.setItem('zero_lang', code);
+      translateWholePage(); // yeniden uygula
+    }
+
+    async function translateText(text, target) {
+      if(!text || target === 'en') return text;
+      try {
+        const res = await fetch(`https://translation.googleapis.com/language/translate/v2?key=${GOOGLE_API_KEY}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ q: text, source: "en", target, format: "text" })
+        });
+        const data = await res.json();
+        return data?.data?.translations?.[0]?.translatedText || text;
+      } catch(e){ return text; }
+    }
+
+    async function translateWholePage(){
+      const target = getTargetLang();
+      if(target === 'en'){ renderTipsFromCSV('en'); renderSponsors(); return; }
+
+      // Tüm data-translate öğelerini çevir
+      const nodes = Array.from(document.querySelectorAll("[data-translate]"));
+      // Metinleri topla
+      const texts = nodes.map(n => n.innerText.trim());
+      // Batch çeviri (Google tek seferde dizi kabul eder)
+      try{
+        const res = await fetch(`https://translation.googleapis.com/language/translate/v2?key=${GOOGLE_API_KEY}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ q: texts, source: "en", target, format: "text" })
+        });
+        const data = await res.json();
+        const translations = data?.data?.translations || [];
+        nodes.forEach((n, i) => {
+          if(translations[i]?.translatedText){
+            n.innerText = translations[i].translatedText;
+          }
+        });
+      }catch(e){ /* sessiz geç */ }
+
+      // Tips CSV içeriği İngilizce; tek tek satırları hedef dile çevirip bas
+      await renderTipsFromCSV(target, true);
+      // Sponsorlar sadece başlık/url görsel – başlıkları çevir
+      await renderSponsors(true, target);
+    }
+
+    function saveTip(){
+      const k='zero_saved_count';
+      const n=parseInt(localStorage.getItem(k)||'0',10)+1;
+      localStorage.setItem(k,String(n));
+      // savedBadge içeriği çeviriden sonra güncellenmiş olacak, sadece sayı değiştir
+      const badge = document.getElementById('savedBadge');
+      const label = (badge.innerText.split(':')[0]) || 'Saved';
+      badge.innerHTML = label + ': ' + n;
+      document.getElementById('doneCount').textContent = n;
+    }
+
+    async function renderTipsFromCSV(targetLang='en', translateItems=false){
+      const list = document.getElementById('tipsList'); list.innerHTML='';
+      const err = document.getElementById('tipsErr'); err.style.display='none';
+      try{
+        const res = await fetch('/tips.csv?cache='+Date.now());
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        const text = await res.text();
+        const rows = text.split(/\r?\n/).map(r=>r.trim()).filter(Boolean);
+        const items = rows.slice(1).map(r=>{
+          const idx = r.indexOf(','); if(idx<0) return null;
+          const l = r.slice(0,idx).trim();
+          const tip = r.slice(idx+1).trim();
+          return { lang:l.toLowerCase(), tip };
+        }).filter(Boolean);
+
+        let toRender;
+        if(items.some(it=>it.lang===targetLang)){
+          toRender = items.filter(it => it.lang===targetLang).map(it=>it.tip);
+        } else {
+          // kaynak EN satırlarını hedef dile çevir
+          const enTips = items.filter(it=>it.lang==='en').map(it=>it.tip);
+          if(translateItems && enTips.length){
+            const resTr = await fetch(`https://translation.googleapis.com/language/translate/v2?key=${GOOGLE_API_KEY}`,{
+              method:"POST", headers:{"Content-Type":"application/json"},
+              body: JSON.stringify({ q: enTips, source:"en", target: targetLang, format:"text" })
+            });
+            const dataTr = await resTr.json();
+            toRender = (dataTr?.data?.translations||[]).map(t=>t.translatedText);
+          } else {
+            toRender = enTips;
+          }
+        }
+        (toRender && toRender.length ? toRender : ['Walk or cycle for short trips.'])
+          .forEach(t=>{
+            const row = document.createElement('div');
+            row.className='tip';
+            row.innerHTML = `<div>${t}</div>
+              <div class="links"><button class="ghost" onclick="saveTip()" data-translate>✓ Saved</button></div>`;
+            list.appendChild(row);
+          });
+      }catch(e){ err.style.display='block'; }
+      const savedNow = parseInt(localStorage.getItem('zero_saved_count')||'0',10);
+      const badge = document.getElementById('savedBadge');
+      const label = (badge.innerText.split(':')[0]) || 'Saved';
+      badge.innerHTML = label + ': ' + savedNow;
+      document.getElementById('doneCount').textContent = savedNow;
+    }
+
+    async function renderSponsors(translateTitles=false, targetLang='en'){
+      const grid = document.getElementById('spGrid'); grid.innerHTML='';
+      const err = document.getElementById('spErr'); err.style.display='none';
+      try{
+        const res = await fetch('/sponsors.csv?cache='+Date.now());
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        const text = await res.text();
+        const rows = text.split(/\r?\n/).map(r=>r.trim()).filter(Boolean);
+        let items = rows.slice(1).map(r=>{
+          const cols = r.split(',');
+          return { title: (cols[0]||'').trim(), url:(cols[1]||'').trim(), image:(cols[2]||'').trim() };
+        }).filter(x=>x.title);
+
+        if(translateTitles && targetLang!=='en'){
+          const titles = items.map(i=>i.title);
+          const r = await fetch(`https://translation.googleapis.com/language/translate/v2?key=${GOOGLE_API_KEY}`,{
+            method:"POST", headers:{"Content-Type":"application/json"},
+            body: JSON.stringify({ q: titles, source:"en", target: targetLang, format:"text" })
+          });
+          const d = await r.json();
+          const trTitles = (d?.data?.translations||[]).map(t=>t.translatedText);
+          items = items.map((it, idx)=> ({...it, title: trTitles[idx] || it.title}));
+        }
+
+        if(!items.length){ throw new Error('empty'); }
+        items.forEach(sp=>{
+          const card = document.createElement('a');
+          card.className='sp'; card.href = sp.url||'#'; card.target='_blank';
+          card.innerHTML = `<img src="${sp.image||''}" alt="">
+                            <div><div style="font-weight:700">${sp.title}</div>
+                            <div class="muted" style="font-size:13px">${sp.url || ''}</div></div>`;
+          grid.appendChild(card);
+        });
+      }catch(e){
+        err.style.display='block';
+      }
+    }
+
+    // init
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    (async () => {
+      const target = getTargetLang();
+      if(target === 'en'){
+        renderTipsFromCSV('en'); renderSponsors();
+      } else {
+        await translateWholePage();
+      }
+    })();
+  </script>
 </body>
 </html>
