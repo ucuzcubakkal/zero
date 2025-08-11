@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title data-tr>Zero – Terms of Service</title>
+<style>body{font-family:system-ui;margin:40px;line-height:1.6;max-width:820px}</style>
+</head><body>
+<h1 data-tr>Terms of Service</h1>
+<p data-tr>Zero provides general sustainability guidance “as is”. It is not financial, medical, or legal advice. By using the app you agree not to misuse the service and you accept these terms.</p>
+<script>
+(async()=>{
+  const lang=(navigator.language||'en').split('-')[0];
+  if(lang==='en') return;
+  const nodes=[...document.querySelectorAll('[data-tr]')];
+  const texts=nodes.map(n=>n.innerText.trim());
+  const r=await fetch('/api/translate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({texts, target:lang})});
+  const d=await r.json(); const t=d.translations||[];
+  nodes.forEach((n,i)=>{ if(t[i]) n.innerText=t[i]; });
+})();
+</script>
+</body></html>
