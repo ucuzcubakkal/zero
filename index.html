@@ -1,41 +1,41 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Zero – Eco Lifestyle Coach</title>
-  <meta name="description" content="Zero helps you track your carbon footprint, get personalized eco tips, and monitor progress — in any language, anywhere.">
-  <style>
-    :root{ --bg:#0b1e18; --card:#123126; --muted:#b6d5ca; --accent:#7be495; --text:#ffffff; }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text)}
-    .wrap{max-width:1000px;margin:0 auto;padding:20px}
-    header{display:flex;gap:12px;align-items:center;justify-content:space-between}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#2fbf71,#0ea371)}
-    .lang{display:flex;gap:8px}
-    button, a.btn{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;background:var(--accent);color:#0b1e18;font-weight:600;text-decoration:none}
-    button.ghost{background:transparent;color:var(--muted);border:1px solid #26453b}
-    .card{background:color-mix(in srgb, var(--card) 90%, transparent);border:1px solid #1f3c31;border-radius:16px;padding:20px;margin-top:16px}
-    h1{margin:14px 0 6px}
-    p.lead{margin:0;color:var(--muted)}
-    .grid{display:grid;gap:14px}
-    @media(min-width:1050px){ .grid{grid-template-columns:1.1fr .9fr} }
-    .muted{color:var(--muted)}
-    footer{margin:30px 0 10px;color:var(--muted);font-size:14px;display:flex;gap:12px;flex-wrap:wrap}
-    .chips{display:flex;gap:8px;flex-wrap:wrap}
-    .chip{border:1px solid #2b5144;color:var(--muted);padding:6px 10px;border-radius:999px;font-size:13px}
-    .badge{display:inline-block;background:#0f342a;border:1px solid #2a5c4b;border-radius:8px;padding:6px 10px;font-size:13px;color:var(--muted)}
-    .tip{border-left:3px solid var(--accent);padding-left:10px}
-    .links{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    .kpi{display:flex;gap:14px;flex-wrap:wrap}
-    .kpi .box{flex:1 1 180px;border:1px solid #1f3c31;background:#0d261f;border-radius:12px;padding:12px}
-    .center{display:flex;align-items:center;gap:10px}
-    .sponsors{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
-    .sp{border:1px solid #1f3c31;background:#0d261f;border-radius:12px;padding:12px;display:flex;gap:10px;align-items:center}
-    .sp img{width:46px;height:46px;object-fit:contain;background:#062018;border-radius:10px;border:1px solid #15392e}
-    .err{background:#3a1414;border:1px solid #6a2a2a;color:#f5d0d0;padding:10px;border-radius:8px}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Zero – Eco Lifestyle Coach</title>
+<meta name="description" content="Zero helps you track your carbon footprint, get personalized eco tips, and monitor progress — in any language, anywhere.">
+<style>
+  :root{ --bg:#0b1e18; --card:#123126; --muted:#b6d5ca; --accent:#7be495; --text:#ffffff; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text)}
+  .wrap{max-width:1000px;margin:0 auto;padding:20px}
+  header{display:flex;gap:12px;align-items:center;justify-content:space-between}
+  .brand{display:flex;gap:12px;align-items:center}
+  .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#2fbf71,#0ea371)}
+  .lang{display:flex;gap:8px}
+  button, a.btn{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;background:var(--accent);color:#0b1e18;font-weight:600;text-decoration:none}
+  button.ghost{background:transparent;color:var(--muted);border:1px solid #26453b}
+  .card{background:color-mix(in srgb, var(--card) 90%, transparent);border:1px solid #1f3c31;border-radius:16px;padding:20px;margin-top:16px}
+  h1{margin:14px 0 6px}
+  p.lead{margin:0;color:var(--muted)}
+  .grid{display:grid;gap:14px}
+  @media(min-width:1050px){ .grid{grid-template-columns:1.1fr .9fr} }
+  .muted{color:var(--muted)}
+  footer{margin:30px 0 10px;color:var(--muted);font-size:14px;display:flex;gap:12px;flex-wrap:wrap}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{border:1px solid #2b5144;color:var(--muted);padding:6px 10px;border-radius:999px;font-size:13px}
+  .badge{display:inline-block;background:#0f342a;border:1px solid #2a5c4b;border-radius:8px;padding:6px 10px;font-size:13px;color:var(--muted)}
+  .tip{border-left:3px solid var(--accent);padding-left:10px}
+  .links{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+  .kpi{display:flex;gap:14px;flex-wrap:wrap}
+  .kpi .box{flex:1 1 180px;border:1px solid #1f3c31;background:#0d261f;border-radius:12px;padding:12px}
+  .center{display:flex;align-items:center;gap:10px}
+  .sponsors{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+  .sp{border:1px solid #1f3c31;background:#0d261f;border-radius:12px;padding:12px;display:flex;gap:10px;align-items:center}
+  .sp img{width:46px;height:46px;object-fit:contain;background:#062018;border-radius:10px;border:1px solid #15392e}
+  .err{background:#3a1414;border:1px solid #6a2a2a;color:#f5d0d0;padding:10px;border-radius:8px}
+</style>
 </head>
 <body>
   <div class="wrap">
@@ -44,45 +44,49 @@
         <div class="logo"></div>
         <div>
           <div style="font-weight:700">Zero – Eco Lifestyle Coach</div>
-          <div class="muted" id="subtitle">Track Your Eco Impact</div>
+          <div class="muted" data-i18n="subtitle">Track Your Eco Impact</div>
         </div>
       </div>
       <div class="lang">
-        <button class="ghost" onclick="setLang('en')">English</button>
-        <button class="ghost" onclick="setLang('tr')">Türkçe</button>
+        <button class="ghost" onclick="manualLang('en')">English</button>
+        <button class="ghost" onclick="manualLang('tr')">Türkçe</button>
+        <button class="ghost" onclick="manualLang('de')">Deutsch</button>
+        <button class="ghost" onclick="manualLang('ar')">العربية</button>
       </div>
     </header>
 
     <div class="grid">
       <section class="card">
-        <h1 id="welcome">Welcome to Zero</h1>
-        <p class="lead" id="desc">Calculate your carbon footprint, get personalized eco tips, and track your progress — in any language, anywhere.</p>
+        <h1 data-i18n="welcome">Welcome to Zero</h1>
+        <p class="lead" data-i18n="desc">Calculate your carbon footprint, get personalized eco tips, and track your progress — in any language, anywhere.</p>
+
         <div class="kpi" style="margin-top:12px">
           <div class="box">
-            <div class="muted" id="kpi1t">Current Impact</div>
+            <div class="muted" data-i18n="kpi1t">Current Impact</div>
             <div style="font-size:22px;font-weight:700">—</div>
-            <div class="muted" id="kpi1d">Starter mode (no payments)</div>
+            <div class="muted" data-i18n="kpi1d">Starter mode (no payments)</div>
           </div>
           <div class="box">
-            <div class="muted" id="kpi2t">This Month</div>
+            <div class="muted" data-i18n="kpi2t">This Month</div>
             <div style="font-size:22px;font-weight:700">—</div>
-            <div class="muted" id="kpi2d">Track tips completed</div>
+            <div class="muted" data-i18n="kpi2d">Track tips completed</div>
           </div>
           <div class="box">
-            <div class="muted" id="kpi3t">Badges</div>
+            <div class="muted" data-i18n="kpi3t">Badges</div>
             <div class="chips"><span class="chip">Starter</span><span class="chip">Ad-Free Tips</span></div>
           </div>
         </div>
+
         <div class="links">
-          <a class="btn" href="/health.html" id="healthBtn">Health Check</a>
-          <a class="btn" href="#tips" id="tipsBtn">Eco Tips</a>
-          <a class="btn" href="#reports" id="reportsBtn">Monthly Report</a>
+          <a class="btn" href="/health.html" data-i18n="health">Health Check</a>
+          <a class="btn" href="#tips" data-i18n="tipsBtn">Eco Tips</a>
+          <a class="btn" href="#reports" data-i18n="reportBtn">Monthly Report</a>
         </div>
       </section>
 
       <aside class="card" id="tips">
         <div class="center" style="justify-content:space-between">
-          <h3 id="tipsTitle" style="margin:0">Quick Eco Tips</h3>
+          <h3 style="margin:0" data-i18n="tipsTitle">Quick Eco Tips</h3>
           <span class="badge" id="savedBadge">Saved: 0</span>
         </div>
         <div id="tipsList" style="margin-top:10px;display:grid;gap:10px"></div>
@@ -92,94 +96,101 @@
 
     <section class="card">
       <div class="center" style="justify-content:space-between">
-        <h3 style="margin:0" id="spTitle">Sponsors</h3>
-        <a class="ghost" href="/admin.html">Admin</a>
+        <h3 style="margin:0" data-i18n="spTitle">Sponsors</h3>
+        <a class="ghost" href="/admin.html" data-i18n="adminLink">Admin</a>
       </div>
       <div id="spGrid" class="sponsors" style="margin-top:10px"></div>
       <div id="spErr" style="margin-top:10px;display:none" class="err"></div>
     </section>
 
     <section class="card" id="reports" style="margin-top:16px">
-      <h3 id="reportTitle" style="margin:0 0 6px">Monthly Progress</h3>
-      <p class="muted" id="reportDesc">Save tips as you complete them; your monthly progress will appear here.</p>
+      <h3 style="margin:0 0 6px" data-i18n="reportTitle">Monthly Progress</h3>
+      <p class="muted" data-i18n="reportDesc">Save tips as you complete them; your monthly progress will appear here.</p>
       <div class="chips" id="monthChips">
-        <span class="chip">Tips completed: <b id="doneCount">0</b></span>
-        <span class="chip">Languages: EN / TR</span>
-        <span class="chip">Payments: Disabled</span>
+        <span class="chip"><span data-i18n="tipsCompleted">Tips completed</span>: <b id="doneCount">0</b></span>
+        <span class="chip" data-i18n="langsInfo">Languages: EN / TR / DE / AR</span>
+        <span class="chip" data-i18n="paymentsInfo">Payments: Disabled</span>
       </div>
     </section>
 
     <footer>
-      <a class="ghost" href="/privacy.html">Privacy</a>
-      <a class="ghost" href="/terms.html">Terms</a>
+      <a class="ghost" href="/privacy.html" data-i18n="privacy">Privacy</a>
+      <a class="ghost" href="/terms.html" data-i18n="terms">Terms</a>
       <span>© <span id="year"></span> Zero</span>
     </footer>
   </div>
 
+  <!-- i18next + backend + detector (CDN) -->
+  <script src="https://unpkg.com/i18next@23.10.1/dist/umd/i18next.min.js"></script>
+  <script src="https://unpkg.com/i18next-http-backend@2.4.3/i18nextHttpBackend.min.js"></script>
+  <script src="https://unpkg.com/i18next-browser-languagedetector@7.1.0/i18nextBrowserLanguageDetector.min.js"></script>
+
   <script>
-    const texts = {
-      en: {
-        subtitle:"Track Your Eco Impact",
-        welcome:"Welcome to Zero – Eco Lifestyle Coach",
-        desc:"Calculate your carbon footprint, get personalized eco tips, and track your progress — in any language, anywhere.",
-        kpi1t:"Current Impact", kpi1d:"Starter mode (no payments)",
-        kpi2t:"This Month", kpi2d:"Track tips completed",
-        tipsTitle:"Quick Eco Tips", saved:"Saved",
-        health:"Health Check", tips:"Eco Tips", reportBtn:"Monthly Report",
-        reportTitle:"Monthly Progress", reportDesc:"Save tips as you complete them; your monthly progress will appear here.",
-        spTitle:"Sponsors",
-        tipsErr:"Could not load tips.csv.", spErr:"Could not load sponsors.csv."
-      },
-      tr: {
-        subtitle:"Çevresel Etkini Takip Et",
-        welcome:"Zero – Eko Yaşam Koçuna Hoş Geldiniz",
-        desc:"Karbon ayak izinizi hesaplayın, size özel çevre dostu ipuçları alın ve ilerlemenizi her dilde, her yerde takip edin.",
-        kpi1t:"Mevcut Etki", kpi1d:"Başlangıç modu (ödeme yok)",
-        kpi2t:"Bu Ay", kpi2d:"Tamamlanan ipuçlarını takip edin",
-        tipsTitle:"Hızlı Çevre İpuçları", saved:"Kaydedildi",
-        health:"Sağlık Kontrolü", tips:"İpuçları", reportBtn:"Aylık Rapor",
-        reportTitle:"Aylık İlerleme", reportDesc:"Uyguladığınız ipuçlarını kaydedin; aylık ilerlemeniz burada görünür.",
-        spTitle:"Sponsorlar",
-        tipsErr:"tips.csv yüklenemedi.", spErr:"sponsors.csv yüklenemedi."
-      }
-    };
+    // Ülkeye göre dil zorlaması (opsiyonel). İstersen açık bırak:
+    const countryToLang = { TR:'tr', DE:'de', AT:'de', CH:'de', AE:'ar', SA:'ar', QA:'ar', KW:'ar' };
+    async function detectCountryLang(){
+      try{
+        const r = await fetch('https://ipapi.co/json/'); // opsiyonel: ülke tespiti
+        if(!r.ok) return null;
+        const j = await r.json();
+        return countryToLang[j.country_code] || null;
+      }catch(_){ return null; }
+    }
 
-    function setLang(lang){ localStorage.setItem('lang',lang); applyLang(lang); }
-    function getLang(){ return localStorage.getItem('lang') || (navigator.language||'en').slice(0,2); }
-
-    function applyLang(lang){
-      const t = texts[lang] || texts.en;
-      document.getElementById('subtitle').textContent = t.subtitle;
-      document.getElementById('welcome').textContent = t.welcome;
-      document.getElementById('desc').textContent = t.desc;
-      document.getElementById('kpi1t').textContent = t.kpi1t;
-      document.getElementById('kpi1d').textContent = t.kpi1d;
-      document.getElementById('kpi2t').textContent = t.kpi2t;
-      document.getElementById('kpi2d').textContent = t.kpi2d;
-      document.getElementById('tipsTitle').textContent = t.tipsTitle;
-      document.getElementById('healthBtn').textContent = t.health;
-      document.getElementById('tipsBtn').textContent = t.tips;
-      document.getElementById('reportsBtn').textContent = t.reportBtn;
-      document.getElementById('reportTitle').textContent = t.reportTitle;
-      document.getElementById('reportDesc').textContent = t.reportDesc;
-      document.getElementById('spTitle').textContent = t.spTitle;
-      document.getElementById('tipsErr').textContent = t.tipsErr;
-      document.getElementById('spErr').textContent = t.spErr;
-      loadTipsCSV(lang);
+    function applyI18n(){
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const k = el.getAttribute('data-i18n');
+        el.textContent = i18next.t(k);
+      });
+      // rozet & sayaç
+      const savedNow = parseInt(localStorage.getItem('zero_saved_count')||'0',10);
+      document.getElementById('savedBadge').textContent = i18next.t('saved') + ': ' + savedNow;
+      document.getElementById('doneCount').textContent = savedNow;
+      document.getElementById('year').textContent = new Date().getFullYear();
+      // listeler
+      loadTipsCSV();
       loadSponsors();
     }
+
+    function manualLang(lng){
+      localStorage.setItem('lang', lng);
+      i18next.changeLanguage(lng).then(applyI18n);
+    }
+
+    // i18n init
+    (async function initI18n(){
+      let forced = localStorage.getItem('lang');
+      if(!forced){
+        // önce tarayıcı dili, sonra ülke bazlı zorunlu dil
+        const countryLang = await detectCountryLang(); // istersen kapat
+        if(countryLang) localStorage.setItem('lang', countryLang);
+      }
+      i18next
+        .use(i18nextHttpBackend)
+        .use(i18nextBrowserLanguageDetector)
+        .init({
+          fallbackLng: 'en',
+          supportedLngs: ['en','tr','de','ar'],
+          backend: { loadPath: '/i18n/{{lng}}.json' },
+          detection: {
+            order: ['localStorage','navigator','htmlTag'],
+            caches: ['localStorage']
+          }
+        }).then(applyI18n);
+    })();
 
     function saveTip(){
       const k='zero_saved_count';
       const n=parseInt(localStorage.getItem(k)||'0',10)+1;
       localStorage.setItem(k,String(n));
-      document.getElementById('savedBadge').textContent = (texts[getLang()]?.saved||'Saved')+': '+n;
+      document.getElementById('savedBadge').textContent = i18next.t('saved')+': '+n;
       document.getElementById('doneCount').textContent = n;
     }
 
-    async function loadTipsCSV(lang){
+    async function loadTipsCSV(){
       const list = document.getElementById('tipsList'); list.innerHTML='';
       const err = document.getElementById('tipsErr'); err.style.display='none';
+      const lng = i18next.language?.split('-')[0] || 'en';
       try{
         const res = await fetch('/tips.csv?cache='+Date.now());
         if(!res.ok) throw new Error('HTTP '+res.status);
@@ -187,25 +198,25 @@
         const rows = text.split(/\r?\n/).map(r=>r.trim()).filter(Boolean);
         const items = rows.slice(1).map(r=>{
           const idx = r.indexOf(','); if(idx<0) return null;
-          const l = r.slice(0,idx).trim();
+          const l = r.slice(0,idx).trim().toLowerCase();
           const tip = r.slice(idx+1).trim();
-          return { lang:l.toLowerCase(), tip };
-        }).filter(Boolean).filter(it => it.lang=== (texts[lang]?lang:'en'));
-        renderTips(items.length?items:[
-          {tip: lang==='tr' ? 'Kısa mesafelerde yürüyün veya bisiklete binin.' : 'Walk or cycle for short trips.'}
-        ], lang);
-      }catch(e){ err.style.display='block'; }
-      const savedNow = parseInt(localStorage.getItem('zero_saved_count')||'0',10);
-      document.getElementById('savedBadge').textContent = (texts[getLang()]?.saved||'Saved')+': '+savedNow;
-      document.getElementById('doneCount').textContent = savedNow;
+          return { lang:l, tip };
+        }).filter(Boolean).filter(it => it.lang === lng);
+        const fallback = [{tip: i18next.t('tipFallback1')}];
+        renderTips(items.length?items:fallback);
+      }catch(e){
+        err.style.display='block';
+        err.textContent = i18next.t('tipsErr');
+      }
     }
-    function renderTips(items, lang){
+
+    function renderTips(items){
       const list = document.getElementById('tipsList'); list.innerHTML='';
       items.forEach((it)=>{
         const row = document.createElement('div');
         row.className='tip';
         row.innerHTML = `<div>${it.tip}</div>
-          <div class="links"><button class="ghost" onclick="saveTip()">✓ ${(texts[lang]?.saved)||'Saved'}</button></div>`;
+          <div class="links"><button class="ghost" onclick="saveTip()">✓ ${i18next.t('saved')}</button></div>`;
         list.appendChild(row);
       });
     }
@@ -220,29 +231,22 @@
         const rows = text.split(/\r?\n/).map(r=>r.trim()).filter(Boolean);
         const items = rows.slice(1).map(r=>{
           const cols = r.split(',');
-          return { title: (cols[0]||'').trim(), url:(cols[1]||'').trim(), image:(cols[2]||'').trim() };
+          return { title:(cols[0]||'').trim(), url:(cols[1]||'').trim(), image:(cols[2]||'').trim() };
         }).filter(x=>x.title);
-        if(!items.length){ throw new Error('empty'); }
+        if(!items.length) throw new Error('empty');
         items.forEach(sp=>{
           const card = document.createElement('a');
           card.className='sp'; card.href = sp.url||'#'; card.target='_blank';
           card.innerHTML = `<img src="${sp.image||''}" alt="">
                             <div><div style="font-weight:700">${sp.title}</div>
-                            <div class="muted" style="font-size:13px">${sp.url || ''}</div></div>`;
+                            <div class="muted" style="font-size:13px">${sp.url||''}</div></div>`;
           grid.appendChild(card);
         });
       }catch(e){
         err.style.display='block';
-        err.textContent = document.getElementById('spErr').textContent;
+        err.textContent = i18next.t('spErr');
       }
     }
-
-    const initLang = texts[getLang()] ? getLang() : 'en';
-    applyLang(initLang);
-    document.getElementById('year').textContent = new Date().getFullYear();
-    const savedNow = parseInt(localStorage.getItem('zero_saved_count')||'0',10);
-    document.getElementById('savedBadge').textContent = (texts[initLang].saved||'Saved')+': '+savedNow;
-    document.getElementById('doneCount').textContent = savedNow;
   </script>
 </body>
 </html>
