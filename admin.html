@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zero Admin</title>
+<style>
+  :root{--bg:#0b1e18;--card:#123126;--muted:#b6d5ca;--accent:#7be495;--text:#fff}
+  body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
+  .wrap{max-width:1000px;margin:0 auto;padding:20px}
+  .card{background:#0f2a22;border:1px solid #1f3c31;border-radius:16px;padding:20px;margin:14px 0}
+  h1,h2{margin:6px 0 10px}
+  button{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;background:var(--accent);color:#0b1e18;font-weight:700}
+  button.ghost{background:transparent;color:var(--muted);border:1px solid #26453b}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid #244a3d;padding:8px;vertical-align:top}
+  input,textarea{width:100%;padding:8px;border-radius:8px;border:1px solid #244a3d;background:#0a231c;color:#fff}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .row > *{flex:1 1 220px}
+  .muted{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Zero – Admin Panel</h1>
+  <p class="muted">Edit <b>tips.csv</b> and <b>sponsors.csv</b> without coding. Download the CSV and upload to GitHub.</p>
+
+  <div id="gate" class="card">
+    <h2>Access</h2>
+    <div class="row">
+      <div><input id="key" placeholder="Enter admin key (ZERO2024)"></div>
+      <div><button onclick="unlock()">Unlock</button></div>
+    </div>
+    <p class="muted">Change the key inside <code>admin.html</code> if needed.</p>
+  </div>
+
+  <div id="panel" style="display:none">
+    <div class="card">
+      <h2>Tips (tips.csv)</h2>
+      <p class="muted">Columns: <b>lang, tip</b> (e.g., en, tr)</p>
+      <div class="row">
+        <button onclick="addTipRow()">+ Add row</button>
+        <button class="ghost" onclick="downloadTips()">Save & Download CSV</button>
+        <a class="ghost" target="_blank" id="tipsRawLink">Open current tips.csv</a>
+      </div>
+      <table id="tipsTbl">
+        <thead><tr><th style="width:120px">lang</th><th>tip</th><th style="width:70px">del</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div id="tipsMsg" class="muted" style="margin-top:8px"></div>
+    </div>
+
+    <div class="card">
+      <h2>Sponsors (sponsors.csv)</h2>
+      <p class="muted">Columns: <b>title, url, image</b></p>
+      <div class="row">
+        <button onclick="addSponsorRow()">+ Add row</button>
+        <button class="ghost" onclick="downloadSponsors()">Save & Download CSV</button>
+        <a class="ghost" target="_blank" id="spRawLink">Open current sponsors.csv</a>
+      </div>
+      <table id="spTbl">
+        <thead><tr><th style="width:200px">title</th><th>url</th><th>image</th><th style="width:70px">del</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div id="spMsg" class="muted" style="margin-top:8px"></div>
+    </div>
+
+    <div class="card">
+      <h2>How to publish?</h2>
+      <ol>
+        <li>Click <b>Save & Download CSV</b>.</li>
+        <li>GitHub → <b>Add file → Upload files</b>.</li>
+        <li>Upload CSV → <b>Commit</b> → Vercel auto-deploy.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<script>
+const ADMIN_KEY = "ZERO2024";
+function unlock(){
+  const v = document.getElementById('key').value.trim();
+  if(v === ADMIN_KEY){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('panel').style.display='';
+    init();
+  } else alert('Wrong key');
+}
+function parseCSV(text){
+  const lines = text.split(/\r?\n/).filter(x=>x.trim().length>0);
+  const header = lines.shift().split(',').map(s=>s.trim());
+  return lines.map(line=>{
+    const parts = line.split(',');
+    const row = {}; header.forEach((h,i)=> row[h] = (parts[i]||'').trim());
+    return row;
+  });
+}
+function toCSV(header, rows){
+  const head = header.join(',');
+  const lines = rows.map(r => header.map(h => (r[h]||'').replace(/[\r\n]+/g,' ').trim()).join(','));
+  return head + "\n" + lines.join("\n");
+}
+function download(filename, content){
+  const blob = new Blob([content], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = filename; a.click();
+  setTimeout(()=>URL.revokeObjectURL(url), 500);
+}
+async function loadTips(){
+  try{
+    const res = await fetch('/tips.csv?cache='+Date.now());
+    if(!res.ok) throw new Error('tips.csv not found');
+    const rows = parseCSV(await res.text());
+    const tb = document.querySelector('#tipsTbl tbody'); tb.innerHTML='';
+    rows.forEach(r=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td><input value="${r.lang||''}"></td>
+      <td><textarea rows="2">${r.tip||''}</textarea></td>
+      <td><button class="ghost" onclick="this.closest('tr').remove()">del</button></td>`;
+      tb.appendChild(tr);
+    });
+    document.getElementById('tipsMsg').textContent='';
+  }catch{ document.getElementById('tipsMsg').textContent='tips.csv not found; start from empty table.' }
+}
+function addTipRow(){
+  const tb = document.querySelector('#tipsTbl tbody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td><input value="en"></td><td><textarea rows="2"></textarea></td>
+  <td><button class="ghost" onclick="this.closest('tr').remove()">del</button></td>`;
+  tb.appendChild(tr);
+}
+function downloadTips(){
+  const rows = [...document.querySelectorAll('#tipsTbl tbody tr')].map(tr=>{
+    const tds = tr.querySelectorAll('td');
+    return { lang: tds[0].querySelector('input').value.trim(),
+             tip: tds[1].querySelector('textarea').value.trim() };
+  }).filter(r=>r.lang && r.tip);
+  download('tips.csv', toCSV(['lang','tip'], rows));
+}
+async function loadSponsors(){
+  try{
+    const res = await fetch('/sponsors.csv?cache='+Date.now());
+    if(!res.ok) throw new Error('sponsors.csv not found');
+    const rows = parseCSV(await res.text());
+    const tb = document.querySelector('#spTbl tbody'); tb.innerHTML='';
+    rows.forEach(r=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td><input value="${r.title||''}"></td>
+      <td><input value="${r.url||''}"></td>
+      <td><input value="${r.image||''}"></td>
+      <td><button class="ghost" onclick="this.closest('tr').remove()">del</button></td>`;
+      tb.appendChild(tr);
+    });
+    document.getElementById('spMsg').textContent='';
+  }catch{ document.getElementById('spMsg').textContent='sponsors.csv not found; start from empty table.' }
+}
+function addSponsorRow(){
+  const tb = document.querySelector('#spTbl tbody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td><input value=""></td><td><input value="https://"></td><td><input value=""></td>
+  <td><button class="ghost" onclick="this.closest('tr').remove()">del</button></td>`;
+  tb.appendChild(tr);
+}
+function downloadSponsors(){
+  const rows = [...document.querySelectorAll('#spTbl tbody tr')].map(tr=>{
+    const tds = tr.querySelectorAll('td');
+    return { title: tds[0].querySelector('input').value.trim(),
+             url: tds[1].querySelector('input').value.trim(),
+             image: tds[2].querySelector('input').value.trim() };
+  }).filter(r=>r.title);
+  download('sponsors.csv', toCSV(['title','url','image'], rows));
+}
+function init(){
+  const base = location.origin;
+  document.getElementById('tipsRawLink').href = base + '/tips.csv';
+  document.getElementById('spRawLink').href = base + '/sponsors.csv';
+  loadTips(); loadSponsors();
+}
+</script>
+</body>
+</html>
