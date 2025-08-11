@@ -6,9 +6,7 @@
   <title>Zero – Eco Lifestyle Coach</title>
   <meta name="description" content="Zero helps you track your carbon footprint, get personalized eco tips, and monitor progress — in any language, anywhere.">
   <style>
-    :root{
-      --bg:#0b1e18; --card:#123126; --muted:#b6d5ca; --accent:#7be495; --text:#ffffff;
-    }
+    :root{ --bg:#0b1e18; --card:#123126; --muted:#b6d5ca; --accent:#7be495; --text:#ffffff; }
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text)}
     .wrap{max-width:940px;margin:0 auto;padding:20px}
@@ -16,15 +14,9 @@
     .brand{display:flex;gap:12px;align-items:center}
     .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#2fbf71,#0ea371)}
     .lang{display:flex;gap:8px}
-    button, a.btn{
-      border:0;border-radius:10px;padding:10px 14px;cursor:pointer;
-      background:var(--accent);color:#0b1e18;font-weight:600;text-decoration:none
-    }
+    button, a.btn{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;background:var(--accent);color:#0b1e18;font-weight:600;text-decoration:none}
     button.ghost{background:transparent;color:var(--muted);border:1px solid #26453b}
-    .card{
-      background:color-mix(in srgb, var(--card) 90%, transparent);
-      border:1px solid #1f3c31;border-radius:16px;padding:20px;margin-top:16px
-    }
+    .card{background:color-mix(in srgb, var(--card) 90%, transparent);border:1px solid #1f3c31;border-radius:16px;padding:20px;margin-top:16px}
     h1{margin:14px 0 6px}
     p.lead{margin:0;color:var(--muted)}
     .grid{display:grid;gap:14px}
@@ -40,6 +32,7 @@
     .kpi{display:flex;gap:14px;flex-wrap:wrap}
     .kpi .box{flex:1 1 180px;border:1px solid #1f3c31;background:#0d261f;border-radius:12px;padding:12px}
     .center{display:flex;align-items:center;gap:10px}
+    .err{background:#3a1414;border:1px solid #6a2a2a;color:#f5d0d0;padding:10px;border-radius:8px}
   </style>
 </head>
 <body>
@@ -93,6 +86,7 @@
           <span class="badge" id="savedBadge">Saved: 0</span>
         </div>
         <div id="tipsList" style="margin-top:10px;display:grid;gap:10px"></div>
+        <div id="tipsErr" style="margin-top:10px;display:none" class="err"></div>
       </aside>
     </div>
 
@@ -114,6 +108,7 @@
   </div>
 
   <script>
+    // Dil metinleri
     const texts = {
       en: {
         subtitle:"Track Your Eco Impact",
@@ -124,18 +119,7 @@
         tipsTitle:"Quick Eco Tips", saved:"Saved",
         health:"Health Check", tips:"Eco Tips", reportBtn:"Monthly Report",
         reportTitle:"Monthly Progress", reportDesc:"Save tips as you complete them; your monthly progress will appear here.",
-        tipsArr:[
-          "Walk or cycle for short trips.",
-          "Use LED bulbs at home.",
-          "Wash clothes in cold water.",
-          "Carry a reusable bottle.",
-          "Choose local & seasonal foods.",
-          "Avoid single-use plastics.",
-          "Unplug idle chargers.",
-          "Use public transport once this week.",
-          "Plan meals to reduce food waste.",
-          "Air-dry laundry when possible."
-        ]
+        tipsErr:"Could not load tips.csv. You can still use the app."
       },
       tr: {
         subtitle:"Çevresel Etkini Takip Et",
@@ -146,25 +130,12 @@
         tipsTitle:"Hızlı Çevre İpuçları", saved:"Kaydedildi",
         health:"Sağlık Kontrolü", tips:"İpuçları", reportBtn:"Aylık Rapor",
         reportTitle:"Aylık İlerleme", reportDesc:"Uyguladığınız ipuçlarını kaydedin; aylık ilerlemeniz burada görünür.",
-        tipsArr:[
-          "Kısa mesafelerde yürüyün veya bisiklete binin.",
-          "Evde LED ampul kullanın.",
-          "Çamaşırları soğuk suyla yıkayın.",
-          "Yeniden kullanılabilir bir şişe taşıyın.",
-          "Yerel ve mevsiminde gıdalar tercih edin.",
-          "Tek kullanımlık plastiklerden kaçının.",
-          "Boşta duran şarj cihazlarını çekin.",
-          "Bu hafta bir kez toplu taşıma kullanın.",
-          "Yemek planı yapın, gıda israfını azaltın.",
-          "Mümkünse çamaşırları asarak kurutun."
-        ]
+        tipsErr:"tips.csv yüklenemedi. Uygulamayı yine de kullanabilirsiniz."
       }
     };
 
-    function setLang(lang){
-      localStorage.setItem('lang',lang);
-      applyLang(lang);
-    }
+    function setLang(lang){ localStorage.setItem('lang',lang); applyLang(lang); }
+    function getLang(){ return localStorage.getItem('lang') || (navigator.language||'en').slice(0,2); }
 
     function applyLang(lang){
       const t = texts[lang] || texts.en;
@@ -181,31 +152,67 @@
       document.getElementById('reportsBtn').textContent = t.reportBtn;
       document.getElementById('reportTitle').textContent = t.reportTitle;
       document.getElementById('reportDesc').textContent = t.reportDesc;
-
-      // tips render
-      const list = document.getElementById('tipsList');
-      list.innerHTML='';
-      t.tipsArr.forEach((tip, i)=>{
-        const row = document.createElement('div');
-        row.className='tip';
-        row.innerHTML = `<div>${tip}</div>
-          <div class="links">
-            <button class="ghost" onclick="saveTip(${i})">✓ ${t.saved}</button>
-          </div>`;
-        list.appendChild(row);
-      });
+      document.getElementById('tipsErr').textContent = t.tipsErr;
+      loadTipsCSV(lang);
     }
 
-    function saveTip(i){
+    // Kullanıcının ilerleme sayacı
+    function saveTip(){
       const k='zero_saved_count';
       const n=parseInt(localStorage.getItem(k)||'0',10)+1;
       localStorage.setItem(k,String(n));
-      document.getElementById('savedBadge').textContent = (texts[getLang()].saved+': '+n);
+      document.getElementById('savedBadge').textContent = (texts[getLang()]?.saved||'Saved')+': '+n;
       document.getElementById('doneCount').textContent = n;
     }
 
-    function getLang(){
-      return localStorage.getItem('lang') || (navigator.language||'en').slice(0,2);
+    // CSV'den ipuçlarını yükle (dosya: /tips.csv)
+    async function loadTipsCSV(lang){
+      const list = document.getElementById('tipsList');
+      list.innerHTML = '';
+      const err = document.getElementById('tipsErr');
+      err.style.display='none';
+      try{
+        const res = await fetch('/tips.csv?cache=' + Date.now());
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        const text = await res.text();
+        const rows = text.split(/\r?\n/).map(r=>r.trim()).filter(Boolean);
+        // Başlık: lang,tip
+        const items = rows.slice(1).map(r=>{
+          const idx = r.indexOf(',');
+          if(idx<0) return null;
+          const l = r.slice(0,idx).trim();
+          const tip = r.slice(idx+1).trim();
+          return { lang:l.toLowerCase(), tip };
+        }).filter(Boolean).filter(it => it.lang=== (texts[lang]?lang:'en'));
+        if(items.length===0){
+          const fallback = [
+            {tip: lang==='tr' ? 'Kısa mesafelerde yürüyün veya bisiklete binin.' : 'Walk or cycle for short trips.'},
+            {tip: lang==='tr' ? 'Evde LED ampul kullanın.' : 'Use LED bulbs at home.'},
+            {tip: lang==='tr' ? 'Çamaşırları soğuk suyla yıkayın.' : 'Wash clothes in cold water.'}
+          ];
+          renderTips(fallback, lang);
+        }else{
+          renderTips(items, lang);
+        }
+      }catch(e){
+        err.style.display='block';
+      }
+      // rozet sayacı yenile
+      const savedNow = parseInt(localStorage.getItem('zero_saved_count')||'0',10);
+      document.getElementById('savedBadge').textContent = (texts[getLang()]?.saved||'Saved')+': '+savedNow;
+      document.getElementById('doneCount').textContent = savedNow;
+    }
+
+    function renderTips(items, lang){
+      const list = document.getElementById('tipsList');
+      list.innerHTML='';
+      items.forEach((it)=>{
+        const row = document.createElement('div');
+        row.className='tip';
+        row.innerHTML = `<div>${it.tip}</div>
+          <div class="links"><button class="ghost" onclick="saveTip()">✓ ${(texts[lang]?.saved)||'Saved'}</button></div>`;
+        list.appendChild(row);
+      });
     }
 
     // init
@@ -213,9 +220,8 @@
     applyLang(initLang);
     document.getElementById('year').textContent = new Date().getFullYear();
     const savedNow = parseInt(localStorage.getItem('zero_saved_count')||'0',10);
-    document.getElementById('savedBadge').textContent = (texts[initLang].saved+': '+savedNow);
+    document.getElementById('savedBadge').textContent = (texts[initLang].saved||'Saved')+': '+savedNow;
     document.getElementById('doneCount').textContent = savedNow;
   </script>
 </body>
 </html>
-
