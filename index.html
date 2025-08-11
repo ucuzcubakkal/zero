@@ -1,63 +1,221 @@
-<div style="text-align:right;margin:10px">
-  <button onclick="setLang('en')">English</button>
-  <button onclick="setLang('tr')">Türkçe</button>
-</div>
-
-<h1 id="welcome"></h1>
-<p id="description"></p>
-
-<script>
-const texts = {
-  en: {
-    welcome: "Welcome to Zero – Eco Lifestyle Coach",
-    description: "Track your carbon footprint and get personalized eco-friendly tips."
-  },
-  tr: {
-    welcome: "Zero – Eko Yaşam Koçuna Hoş Geldiniz",
-    description: "Karbon ayak izinizi takip edin ve kişiselleştirilmiş çevre dostu ipuçları alın."
-  }
-};
-
-function setLang(lang) {
-  localStorage.setItem('lang', lang);
-  applyLang(lang);
-}
-
-function applyLang(lang) {
-  document.getElementById('welcome').textContent = texts[lang].welcome;
-  document.getElementById('description').textContent = texts[lang].description;
-}
-
-// İlk yüklemede tarayıcı dili
-let userLang = localStorage.getItem('lang') || navigator.language.slice(0,2);
-if (!texts[userLang]) userLang = 'en';
-applyLang(userLang);
-</script>
-
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Zero – Eco Lifestyle Coach</title>
+  <meta name="description" content="Zero helps you track your carbon footprint, get personalized eco tips, and monitor progress — in any language, anywhere.">
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-         margin:0;display:flex;min-height:100vh;align-items:center;justify-content:center;
-         background:#0b1e18;color:#fff}
-    .card{max-width:720px;padding:28px;border-radius:16px;background:#112a22aa;backdrop-filter: blur(6px)}
-    h1{margin:0 0 10px}
-    p{line-height:1.6}
-    .btn{display:inline-block;margin-top:14px;padding:10px 16px;border-radius:10px;
-         background:#7be495;color:#0b1e18;text-decoration:none;font-weight:600}
-    .muted{opacity:.8;font-size:14px}
+    :root{
+      --bg:#0b1e18; --card:#123126; --muted:#b6d5ca; --accent:#7be495; --text:#ffffff;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text)}
+    .wrap{max-width:940px;margin:0 auto;padding:20px}
+    header{display:flex;gap:12px;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#2fbf71,#0ea371)}
+    .lang{display:flex;gap:8px}
+    button, a.btn{
+      border:0;border-radius:10px;padding:10px 14px;cursor:pointer;
+      background:var(--accent);color:#0b1e18;font-weight:600;text-decoration:none
+    }
+    button.ghost{background:transparent;color:var(--muted);border:1px solid #26453b}
+    .card{
+      background:color-mix(in srgb, var(--card) 90%, transparent);
+      border:1px solid #1f3c31;border-radius:16px;padding:20px;margin-top:16px
+    }
+    h1{margin:14px 0 6px}
+    p.lead{margin:0;color:var(--muted)}
+    .grid{display:grid;gap:14px}
+    @media(min-width:900px){ .grid{grid-template-columns:1.1fr .9fr} }
+    ul{margin:0;padding-left:18px}
+    .muted{color:var(--muted)}
+    footer{margin:30px 0 10px;color:var(--muted);font-size:14px;display:flex;gap:12px;flex-wrap:wrap}
+    .chips{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{border:1px solid #2b5144;color:var(--muted);padding:6px 10px;border-radius:999px;font-size:13px}
+    .badge{display:inline-block;background:#0f342a;border:1px solid #2a5c4b;border-radius:8px;padding:6px 10px;font-size:13px;color:var(--muted)}
+    .tip{border-left:3px solid var(--accent);padding-left:10px}
+    .links{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .kpi{display:flex;gap:14px;flex-wrap:wrap}
+    .kpi .box{flex:1 1 180px;border:1px solid #1f3c31;background:#0d261f;border-radius:12px;padding:12px}
+    .center{display:flex;align-items:center;gap:10px}
   </style>
 </head>
 <body>
-  <main class="card">
-    <h1>Zero – Eco Lifestyle Coach</h1>
-    <p>Calculate your carbon footprint, get personalized eco tips, and track your progress — in any language, anywhere.</p>
-    <a class="btn" href="/health">Health Check</a>
-    <p class="muted">If you see this page in Pi Browser, hosting works. We’ll add callbacks & APIs next.</p>
-  </main>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <div style="font-weight:700">Zero – Eco Lifestyle Coach</div>
+          <div class="muted" id="subtitle">Track Your Eco Impact</div>
+        </div>
+      </div>
+      <div class="lang">
+        <button class="ghost" onclick="setLang('en')">English</button>
+        <button class="ghost" onclick="setLang('tr')">Türkçe</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <h1 id="welcome">Welcome to Zero</h1>
+        <p class="lead" id="desc">Calculate your carbon footprint, get personalized eco tips, and track your progress — in any language, anywhere.</p>
+
+        <div class="kpi" style="margin-top:12px">
+          <div class="box">
+            <div class="muted" id="kpi1t">Current Impact</div>
+            <div style="font-size:22px;font-weight:700">—</div>
+            <div class="muted" id="kpi1d">Starter mode (no payments)</div>
+          </div>
+          <div class="box">
+            <div class="muted" id="kpi2t">This Month</div>
+            <div style="font-size:22px;font-weight:700">—</div>
+            <div class="muted" id="kpi2d">Track tips completed</div>
+          </div>
+          <div class="box">
+            <div class="muted" id="kpi3t">Badges</div>
+            <div class="chips"><span class="chip">Starter</span><span class="chip">Ad-Free Tips</span></div>
+          </div>
+        </div>
+
+        <div class="links">
+          <a class="btn" href="/health.html" id="healthBtn">Health Check</a>
+          <a class="btn" href="#tips" id="tipsBtn">Eco Tips</a>
+          <a class="btn" href="#reports" id="reportsBtn">Monthly Report</a>
+        </div>
+      </section>
+
+      <aside class="card" id="tips">
+        <div class="center" style="justify-content:space-between">
+          <h3 id="tipsTitle" style="margin:0">Quick Eco Tips</h3>
+          <span class="badge" id="savedBadge">Saved: 0</span>
+        </div>
+        <div id="tipsList" style="margin-top:10px;display:grid;gap:10px"></div>
+      </aside>
+    </div>
+
+    <section class="card" id="reports" style="margin-top:16px">
+      <h3 id="reportTitle" style="margin:0 0 6px">Monthly Progress</h3>
+      <p class="muted" id="reportDesc">Save tips as you complete them; your monthly progress will appear here.</p>
+      <div class="chips" id="monthChips">
+        <span class="chip">Tips completed: <b id="doneCount">0</b></span>
+        <span class="chip">Languages: EN / TR</span>
+        <span class="chip">Payments: Disabled</span>
+      </div>
+    </section>
+
+    <footer>
+      <a class="ghost" href="/privacy.html">Privacy</a>
+      <a class="ghost" href="/terms.html">Terms</a>
+      <span>© <span id="year"></span> Zero</span>
+    </footer>
+  </div>
+
+  <script>
+    const texts = {
+      en: {
+        subtitle:"Track Your Eco Impact",
+        welcome:"Welcome to Zero – Eco Lifestyle Coach",
+        desc:"Calculate your carbon footprint, get personalized eco tips, and track your progress — in any language, anywhere.",
+        kpi1t:"Current Impact", kpi1d:"Starter mode (no payments)",
+        kpi2t:"This Month", kpi2d:"Track tips completed",
+        tipsTitle:"Quick Eco Tips", saved:"Saved",
+        health:"Health Check", tips:"Eco Tips", reportBtn:"Monthly Report",
+        reportTitle:"Monthly Progress", reportDesc:"Save tips as you complete them; your monthly progress will appear here.",
+        tipsArr:[
+          "Walk or cycle for short trips.",
+          "Use LED bulbs at home.",
+          "Wash clothes in cold water.",
+          "Carry a reusable bottle.",
+          "Choose local & seasonal foods.",
+          "Avoid single-use plastics.",
+          "Unplug idle chargers.",
+          "Use public transport once this week.",
+          "Plan meals to reduce food waste.",
+          "Air-dry laundry when possible."
+        ]
+      },
+      tr: {
+        subtitle:"Çevresel Etkini Takip Et",
+        welcome:"Zero – Eko Yaşam Koçuna Hoş Geldiniz",
+        desc:"Karbon ayak izinizi hesaplayın, size özel çevre dostu ipuçları alın ve ilerlemenizi her dilde, her yerde takip edin.",
+        kpi1t:"Mevcut Etki", kpi1d:"Başlangıç modu (ödeme yok)",
+        kpi2t:"Bu Ay", kpi2d:"Tamamlanan ipuçlarını takip edin",
+        tipsTitle:"Hızlı Çevre İpuçları", saved:"Kaydedildi",
+        health:"Sağlık Kontrolü", tips:"İpuçları", reportBtn:"Aylık Rapor",
+        reportTitle:"Aylık İlerleme", reportDesc:"Uyguladığınız ipuçlarını kaydedin; aylık ilerlemeniz burada görünür.",
+        tipsArr:[
+          "Kısa mesafelerde yürüyün veya bisiklete binin.",
+          "Evde LED ampul kullanın.",
+          "Çamaşırları soğuk suyla yıkayın.",
+          "Yeniden kullanılabilir bir şişe taşıyın.",
+          "Yerel ve mevsiminde gıdalar tercih edin.",
+          "Tek kullanımlık plastiklerden kaçının.",
+          "Boşta duran şarj cihazlarını çekin.",
+          "Bu hafta bir kez toplu taşıma kullanın.",
+          "Yemek planı yapın, gıda israfını azaltın.",
+          "Mümkünse çamaşırları asarak kurutun."
+        ]
+      }
+    };
+
+    function setLang(lang){
+      localStorage.setItem('lang',lang);
+      applyLang(lang);
+    }
+
+    function applyLang(lang){
+      const t = texts[lang] || texts.en;
+      document.getElementById('subtitle').textContent = t.subtitle;
+      document.getElementById('welcome').textContent = t.welcome;
+      document.getElementById('desc').textContent = t.desc;
+      document.getElementById('kpi1t').textContent = t.kpi1t;
+      document.getElementById('kpi1d').textContent = t.kpi1d;
+      document.getElementById('kpi2t').textContent = t.kpi2t;
+      document.getElementById('kpi2d').textContent = t.kpi2d;
+      document.getElementById('tipsTitle').textContent = t.tipsTitle;
+      document.getElementById('healthBtn').textContent = t.health;
+      document.getElementById('tipsBtn').textContent = t.tips;
+      document.getElementById('reportsBtn').textContent = t.reportBtn;
+      document.getElementById('reportTitle').textContent = t.reportTitle;
+      document.getElementById('reportDesc').textContent = t.reportDesc;
+
+      // tips render
+      const list = document.getElementById('tipsList');
+      list.innerHTML='';
+      t.tipsArr.forEach((tip, i)=>{
+        const row = document.createElement('div');
+        row.className='tip';
+        row.innerHTML = `<div>${tip}</div>
+          <div class="links">
+            <button class="ghost" onclick="saveTip(${i})">✓ ${t.saved}</button>
+          </div>`;
+        list.appendChild(row);
+      });
+    }
+
+    function saveTip(i){
+      const k='zero_saved_count';
+      const n=parseInt(localStorage.getItem(k)||'0',10)+1;
+      localStorage.setItem(k,String(n));
+      document.getElementById('savedBadge').textContent = (texts[getLang()].saved+': '+n);
+      document.getElementById('doneCount').textContent = n;
+    }
+
+    function getLang(){
+      return localStorage.getItem('lang') || (navigator.language||'en').slice(0,2);
+    }
+
+    // init
+    const initLang = texts[getLang()] ? getLang() : 'en';
+    applyLang(initLang);
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const savedNow = parseInt(localStorage.getItem('zero_saved_count')||'0',10);
+    document.getElementById('savedBadge').textContent = (texts[initLang].saved+': '+savedNow);
+    document.getElementById('doneCount').textContent = savedNow;
+  </script>
 </body>
 </html>
+
